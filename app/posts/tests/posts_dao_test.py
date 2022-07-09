@@ -9,7 +9,7 @@ class TestPostsDao:
     @pytest.fixture
     def posts_dao(self):
         #print(os.getcwd())
-        return PostsDAO("../../../data/posts.json")
+        return PostsDAO("data/posts.json")
 
     @pytest.fixture
     def keys_expected(self):
@@ -40,6 +40,19 @@ class TestPostsDao:
         post = posts_dao.get_by_pk(1)
         post_keys = set(post.keys())
         assert post_keys == keys_expected, "Полученные ключи неверны"
+
+    parameters_to_get_by_pk = [1, 2, 3, 4, 5, 6, 7, 8]
+
+    @pytest.mark.parametrize("post_pk", parameters_to_get_by_pk)
+    def test_get_one_check_type_has_correct_pk(self, posts_dao, post_pk):
+        post = posts_dao.get_by_pk(post_pk)
+        assert post["pk"] == post_pk, "Номер полученного поста не соответствует номеру запрошенного"
+
+    # Получение по пользователю
+
+
+
+
 
 
 
